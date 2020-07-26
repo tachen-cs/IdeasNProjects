@@ -74,6 +74,7 @@ void i2sInit(){
 }
 
 
+// purely for volume up.
 void i2s_adc_data_scale(uint8_t * d_buff, uint8_t* s_buff, uint32_t len)
 {
     uint32_t j = 0;
@@ -96,7 +97,9 @@ void i2s_adc(void *arg)
     uint8_t* flash_write_buff = (uint8_t*) calloc(i2s_read_len, sizeof(char));
 
     i2s_read(I2S_PORT, (void*) i2s_read_buff, i2s_read_len, &bytes_read, portMAX_DELAY);
-    i2s_read(I2S_PORT, (void*) i2s_read_buff, i2s_read_len, &bytes_read, portMAX_DELAY);
+    i2s_read(I2S_PORT, (void*) i2s_read_buff, i2s_read_len, &bytes_read, portMAX_DELAY); 
+    
+    // for startup the mic in a while, as inmp441 have startup time up to 83ms..
     
     Serial.println(" *** Recording Start *** ");
     while (flash_wr_size < FLASH_RECORD_SIZE) {
